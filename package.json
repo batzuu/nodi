@@ -1,0 +1,28 @@
+{
+  "name": "nodi",
+  "version": "1.0.0",
+  "description": "Music bot with some other utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc --skipLibCheck",
+    "dev": "nodemon index.ts",
+    "ci": "node index.js"
+  },
+  "author": "batzu",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/opus": "^0.7.0",
+    "@discordjs/voice": "^0.7.5",
+    "discord-player": "^5.2.0",
+    "discord.js": "^13.5.0",
+    "dotenv": "^10.0.0",
+    "mongoose": "^6.1.4",
+    "wokcommands": "^1.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.4"
+  }
+
+}
