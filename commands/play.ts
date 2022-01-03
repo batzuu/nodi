@@ -58,7 +58,7 @@ export default {
 			}
 			queue.play(track);
 			await interaction.editReply({
-				content: `playing ${song}`
+				content: `playing ${track.title}`
 			})
 
 		} else console.log("Jiska dar tha vou hua");
