@@ -17,4 +17,4 @@ jobs:
       env:
         TOKEN: ${{ secrets.TOKEN }}
         MONGO_URI: ${{ secrets.MONGO_URI }}
-    - run: docker run -d -e TOKEN -e MONGO_URI nodidevimg
+    - run: RUNNER_TRACKING_ID="" && docker run -d -e TOKEN -e MONGO_URI nodidevimg
