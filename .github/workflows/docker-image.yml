@@ -13,8 +13,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      env:
-        TOKEN: ${{ secrets.TOKEN }}
-        MONGO_URI: ${{ secrets.MONGO_URI }}
       run: docker build . --file Dockerfile.dev --tag nodidevimg:latest
-    - run: RUNNER_TRACKING_ID="" && docker run -d -e TOKEN -e MONGO_URI nodidevimg
+    - run: RUNNER_TRACKING_ID="" && docker run -d -e TOKEN=${{ secrets.TOKEN }} -e MONGO_URI=${{ secrets.MONGO_URI }} nodidevimg
