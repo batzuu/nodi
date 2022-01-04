@@ -7,12 +7,14 @@ on:
     branches: [ dev ]
 
 jobs:
-
   build:
     runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile.dev --tag nodidevimg:$(date +%s)
-    - run: docker run -d nodidevimg
+      run: docker build . --file Dockerfile.dev --tag nodidevimg:latest
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+    - run: docker run -d -e TOKEN -e MONGO_URI nodidevimg

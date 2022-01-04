@@ -38,10 +38,15 @@ export default {
 			);
 
 			const mem = interaction.member as GuildMember;
+			try {
 			if (!queue.connection)
 				await queue.connect(
 					mem.voice.channel as GuildChannelResolvable
 				);
+			} catch {
+				queue.destroy();
+				await interaction.editReply('Could not join your channel')
+			}
 			console.log('ok')
 			console.log('ook')
 
