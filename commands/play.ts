@@ -47,9 +47,6 @@ export default {
 				queue.destroy();
 				await interaction.editReply('Could not join your channel')
 			}
-			console.log('ok')
-			console.log('ook')
-
 			const track = await player
 				.search(song as string, {
 					requestedBy: interaction.user,
