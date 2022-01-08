@@ -12,14 +12,22 @@ export default {
 	slash: true,
 	testOnly: true,
 
-	callback: ({ guild }) => {
+	callback: async ({ guild, interaction }) => {
 		if (player) {
 			let queue = player.getQueue(guild as GuildResolvable)
 			if (queue) {
 				queue.destroy()
-				return 'Queue Destroyed'
+				await interaction.reply({
+					content: 'Queue Destroyed',
+					ephemeral: true
+				})
+				return 
 			} else {
-				return 'Nothing in Queue'
+				await interaction.reply({
+					content: 'Nothing in queue',
+					ephemeral: true
+				})
+				return 
 			}
 		} else {
 			return 'No player {dev_error}'

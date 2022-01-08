@@ -7,7 +7,7 @@ export default (client: Client) => {
 	client.on('messageCreate', async (message) => {
 		let query = await mccSchema.findById(message.guildId)
 		let { musicChannelId, musicMessageId } = query
-		if (message.channelId == musicChannelId) {
+		if (message.channelId == musicChannelId && message.author.bot === false) {
 			let targetChannel = message.channel
 			let queue = player.createQueue(
 				message.guild as GuildResolvable
@@ -52,6 +52,8 @@ export default (client: Client) => {
 			setTimeout(() => {
 				message.delete()
 			}, 5 * 1000)
+		} else {
+			console.log('Not wowo')
 		}
 	})
 }
