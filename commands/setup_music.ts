@@ -1,6 +1,6 @@
-import DJS, { WelcomeChannel } from 'discord.js'
+import DJS, { TextChannel, WelcomeChannel } from 'discord.js'
 import { ICommand } from "wokcommands";
-import tccSchema from '../models/text-channel-config'
+import mccSchema from '../models/music-channel-config'
 
 export default {
 	category: 'Music',
@@ -8,15 +8,6 @@ export default {
 
 	slash: true,
 	testOnly: true,
-	expectedArgs: '<channel>',
-	options: [
-		{
-			name: 'text-channel',
-			description: 'Enter the text channel for NodiMusic',
-			required: true,
-			type: DJS.Constants.ApplicationCommandOptionTypes.CHANNEL,
-		}
-	],
 
 	callback: async ({ interaction, guild }) => {
 		// If used in dms
@@ -27,20 +18,20 @@ export default {
 			return
 		}
 
-		let musicChannel = interaction.options.getChannel('text-channel');
+		let musicChannel = await guild.channels.create('nodi-music', {
+			topic: 'Text channel for nodi music bot',
+			position: 2
+		}) as TextChannel
 
-		if (musicChannel?.type != 'GUILD_TEXT') {
-			interaction.reply({
-				content: 'Enter a valid text channel',
-				ephemeral: true
-			})
-			return
-		}
-		await tccSchema.findOneAndUpdate({_id: guild.id}, {_id: guild.id, musicChannelId: musicChannel.id}, {upsert: true})
+		let targetMessage = await musicChannel.send({
+			content: 'This message will be edited with song details'
+		})
+
+		await mccSchema.findOneAndUpdate({_id: guild.id}, {_id: guild.id, musicChannelId: musicChannel.id, musicMessageId: targetMessage.id}, {upsert: true})
 
 		interaction.reply({
-			content: 'Music Channel Set',
-			ephemeral: true
+			content: 'Music-channel setup complete',
+			ephemeral: true,
 		})
 	}
 } as ICommand
