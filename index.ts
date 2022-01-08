@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
 import { Player } from 'discord-player'
+import welcome from './models/welcome'
 
 dotenv.config()
 
