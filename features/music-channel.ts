@@ -6,10 +6,10 @@ export default (client: Client) => {
 	client.on('messageCreate', async (message) => {
 		console.log('waat')
 		let query = await mccSchema.findById(message.guild!.id)
-		let { musicMessageId } = query
+		let { musicChannelId, musicMessageId } = query
 		console.log(musicMessageId)
 		console.log(message.id)
-		if (message.author.bot == true || (musicMessageId == message.id)) return
+		if (message.author.bot == true || (message.channel.id != musicChannelId)) return
 		let guildQueue = player.getQueue(message.guild!.id)
 		if (!guildQueue) {
 			guildQueue = player.createQueue(message.guild!.id)
