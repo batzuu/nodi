@@ -12,6 +12,16 @@ export default {
 	testOnly: true,
 
 	callback: async ({ guild, interaction }) => {
-		return 'TODO'
+		let guildQueue = player.getQueue(guild!.id)
+		if (!guildQueue) {
+			interaction.reply({
+				content: 'Queue is already empty!',
+				ephemeral: true
+			})
+			return
+		}
+		// leave_on stop is disabled
+		guildQueue.stop()
+		return 'Queue stoped and cleaned'
 	}
 } as ICommand

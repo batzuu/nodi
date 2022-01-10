@@ -32,6 +32,9 @@ export default {
 			if (guildQueue) console.log('Ab hogyi create')
 			else console.log('Ab bhi nahi hui')
 		}
+		let mem = interaction.member as GuildMember
+		await guildQueue.join(mem.voice.channel as GuildChannelResolvable)
+		let song = guildQueue.play(interaction.options.getString('song') as string)
 		return 'check console'
 	},
 } as ICommand;
