@@ -2,8 +2,7 @@ import DJS, { DiscordAPIError, Intents } from 'discord.js'
 import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
-import { Player } from 'discord-player'
-import welcome from './models/welcome'
+import { Player, Queue } from 'discord-music-player'
 
 dotenv.config()
 
@@ -15,7 +14,16 @@ const client = new DJS.Client({
 		Intents.FLAGS.GUILD_MESSAGE_REACTIONS
 	]
 })
-const player = new Player(client)
+
+// Player initialization
+const player = new Player(client, {
+	leaveOnEmpty: false,
+	leaveOnEnd: false
+})
+
+player.on('clientDisconnect', (queue: Queue) => {
+	console.log('bot was disconnected')
+})
 
 client.on('ready', async () => {
 
@@ -30,9 +38,8 @@ client.on('ready', async () => {
 		botOwners: ['396216482138161153'],
 		mongoUri: process.env.MONGO_URI,
 	})
-
 })
 
 client.login(process.env.TOKEN)
 
-export {player}
+export { player }

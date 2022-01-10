@@ -3,9 +3,9 @@ import DJS, {
 	GuildChannelResolvable,
 	GuildMember,
 	GuildResolvable,
+	Interaction,
 } from "discord.js";
-import { player } from "../index";
-import { Track } from "discord-player";
+import { player } from '../index'
 
 export default {
 	category: "Music",
@@ -23,46 +23,15 @@ export default {
 		},
 	],
 
-	callback: async ({ interaction, client }) => {
-		let song = interaction.options.getString("song");
-		interaction.deferReply();
-
-		if (player) {
-			const queue = player.createQueue(
-				interaction.guild as GuildResolvable,
-				{
-					metadata: {
-						channel: interaction.channel,
-					},
-				}
-			);
-
-			const mem = interaction.member as GuildMember;
-			try {
-			if (!queue.connection)
-				await queue.connect(
-					mem.voice.channel as GuildChannelResolvable
-				);
-			} catch {
-				queue.destroy();
-				await interaction.editReply('Could not join your channel')
-			}
-			const track = await player
-				.search(song as string, {
-					requestedBy: interaction.user,
-				})
-				.then((x) => x.tracks[0]) as Track;
-			if (!track) {
-				await interaction.editReply({
-					content: `❌ | Track **${song}** not found!`,
-				})
-				return
-			}
-			queue.play(track);
-			await interaction.editReply({
-				content: `playing ${track.title}`
-			})
-
-		} else console.log("Jiska dar tha vou hua");
+	callback: async ({ interaction, client}) => {
+		if (!interaction) return
+		let guildQueue = player.getQueue(interaction.guild!.id)
+		if (!guildQueue) {
+			console.log("queue does not exist right now")
+			guildQueue = player.createQueue(interaction.guild!.id)
+			if (guildQueue) console.log('Ab hogyi create')
+			else console.log('Ab bhi nahi hui')
+		}
+		return 'check console'
 	},
 } as ICommand;
