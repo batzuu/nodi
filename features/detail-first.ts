@@ -4,8 +4,8 @@ import { player } from '../index'
 import mccSchema from '../models/music-channel-config'
 
 export default (client: Client) => {
-	player.on('songFirst', async (guildQueue: Queue, song: Song) => {
-		let query = await mccSchema.findById(guildQueue.guild.id)
+	let handleSongChange = async (queue: Queue, song: Song, oldSong?: Song) => {
+		let query = await mccSchema.findById(queue.guild.id)
 		let { musicChannelId, musicMessageId } = query
 
 		let targetChannel = await client.channels.fetch(musicChannelId) as TextChannel
@@ -14,5 +14,8 @@ export default (client: Client) => {
 		message.edit({
 			content: `Now playing ${song.name} by ${song.author}`
 		})
-	})	
+	}
+
+	player.on('songFirst', handleSongChange)
+	player.on('songChanged', handleSongChange)
 }

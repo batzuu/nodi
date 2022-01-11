@@ -11,7 +11,7 @@ export default (client: Client) => {
 		let targetMessage = await targetChannel.messages.fetch(musicMessageId) as Message
 
 		targetMessage.edit({
-			content: 'The message will be edited'
+			content: 'This message will be edited with the song details'
 		})
 	}
 	player.on('queueDestroyed', handleReset)
