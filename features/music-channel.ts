@@ -1,4 +1,4 @@
-import { ChannelResolvable, Client, GuildChannelResolvable, GuildMember, GuildResolvable, TextChannel } from "discord.js";
+import { ChannelResolvable, Client, GuildChannelResolvable, GuildMember, GuildResolvable, Interaction, TextChannel } from "discord.js";
 import mccSchema from '../models/music-channel-config'
 import {player} from '../index'
 
@@ -21,8 +21,18 @@ export default (client: Client) => {
 		}
 
 		let mem = message.member as GuildMember
-		await guildQueue.join(mem.voice.channel as GuildChannelResolvable)
-		guildQueue.play(message.content)
+		try {
+			await guildQueue.join(mem.voice.channel as GuildChannelResolvable)
+			guildQueue.play(message.content)
+		} catch {
+			message.reply({
+				content: 'Could not join the voice channel',
+			}).then(reply => {
+				setTimeout(() => {
+					reply.delete()
+				}, 3 * 1000)
+			})
+		}
 		setTimeout(() => {
 			message.delete()
 		}, 1 * 1000)
