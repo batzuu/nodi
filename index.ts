@@ -1,4 +1,4 @@
-import DJS, { Client, DiscordAPIError, Intents } from 'discord.js'
+import DJS, { Client, DiscordAPIError, Guild, GuildMember, Intents } from 'discord.js'
 import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
@@ -52,7 +52,7 @@ client.on('ready', async () => {
 	// WOK Commands initialization
 	const wok = new WOKCommands(client, {
 		commandDir: path.join(__dirname, 'commands'),
-		// featureDir: path.join(__dirname, 'features'),
+		featureDir: path.join(__dirname, 'features'),
 		typeScript: true,
 
 		testServers: ['923972892683817011', '460800811518394368', '930391815465603144', '639524964243865633'],
@@ -62,6 +62,7 @@ client.on('ready', async () => {
 
 	client.manager.init(client.user!.id as string)
 })
+
 
 client.on("raw", (d) => client.manager.updateVoiceState(d));
 

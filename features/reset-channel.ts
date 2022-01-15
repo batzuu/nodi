@@ -14,7 +14,7 @@ export default (client: Client) => {
 			content: 'This message will be edited with the song details'
 		})
 	}
-	player.on('queueDestroyed', handleReset)
-	player.on('queueEnd', handleReset)
-	player.on('clientDisconnect', handleReset)
+	// player.on('queueDestroyed', handleReset)
+	// player.on('queueEnd', handleReset)
+	// player.on('clientDisconnect', handleReset)
 }
