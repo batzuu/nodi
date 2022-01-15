@@ -11,20 +11,22 @@ export default {
 	testOnly: true,
 
 	callback: async ({ guild, interaction }) => {
-		let guildQueue = player.getQueue(guild!.id)
-		if (!guildQueue) {
-			interaction.reply({
-				content: 'Queue is already empty!',
-				ephemeral: true
-			})
-			return
-		}
-		// leave_on stop is disabled
-		guildQueue.stop()
-		interaction.reply({
-			content: 'Queue stoped and cleaned',
-			ephemeral: true
-		})
-		return
+		
+
+		// let guildQueue = player.getQueue(guild!.id)
+		// if (!guildQueue) {
+		// 	interaction.reply({
+		// 		content: 'Queue is already empty!',
+		// 		ephemeral: true
+		// 	})
+		// 	return
+		// }
+		// // leave_on stop is disabled
+		// guildQueue.stop()
+		// interaction.reply({
+		// 	content: 'Queue stoped and cleaned',
+		// 	ephemeral: true
+		// })
+		// return
 	}
 } as ICommand
