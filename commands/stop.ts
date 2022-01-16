@@ -1,7 +1,7 @@
 // quick stop command 
 
 import { ICommand } from "wokcommands";
-import { DisClient, player } from '../index'
+import { DisClient, player, songCollection } from '../index'
 
 export default {
 	category: 'Music',
@@ -22,6 +22,9 @@ export default {
 			})
 			return
 		}
+
+		// Resetting the queue
+		songCollection[guild!.id] = []
 		player.destroy()
 
 		interaction.reply({

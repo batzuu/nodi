@@ -41,12 +41,9 @@ export default {
 
 		if (songCollection[interaction.guild!.id]) {
 			songCollection[guildId].push(res.tracks[0])
-			console.log(songCollection[guildId])
 			return 'song added'
-			return
 		} else {
 			songCollection[guildId] = [res.tracks[0]]
-			console.log(songCollection[guildId])
 		}
 		console.log('waat')
 		player.connect()

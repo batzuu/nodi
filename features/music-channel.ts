@@ -1,6 +1,6 @@
-import { ChannelResolvable, Client, GuildChannelResolvable, GuildMember, GuildResolvable, Interaction, TextChannel } from "discord.js";
+import { ChannelResolvable, Client, Guild, GuildChannelResolvable, GuildMember, GuildResolvable, Interaction, Message, TextChannel } from "discord.js";
 import mccSchema from '../models/music-channel-config'
-import {DisClient, player} from '../index'
+import {DisClient, player, songCollection} from '../index'
 
 export default (client: Client) => {
 	client.on('messageCreate', async (message) => {
@@ -24,6 +24,7 @@ export default (client: Client) => {
 		})
 
 		let res = await player.search(message.content as string, message.member)
+		let guildId = message.guild!.id
 
 		// let guildQueue = player.getQueue(message.guild!.id)
 		// if (!guildQueue) {
@@ -31,18 +32,24 @@ export default (client: Client) => {
 		// }
 
 		try {
-			player.connect()
-			player.queue.add(res.tracks[0])
+			if (!player.playing)
+				player.connect()
 
-			if (!player.playing && !player.paused && !player.queue.size) {
-				player.play()
+			if (songCollection[guildId]) {
+				songCollection[guildId].push(res.tracks[0])
+			} else {
+				songCollection[guildId] = [res.tracks[0]]
+				if (!player.playing && !player.paused && !player.queue.size) {
+					player.play(res.tracks[0])
+				}
+				if (
+					!player.playing &&
+					!player.paused &&
+					player.queue.totalSize === res.tracks.length
+				)
+					player.play(res.tracks[0]);
 			}
-			if (
-				!player.playing &&
-				!player.paused &&
-				player.queue.totalSize === res.tracks.length
-			)
-				player.play();
+
 		} catch {
 			message.reply({
 				content: 'Could not join the voice channel',
