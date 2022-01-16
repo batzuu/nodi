@@ -1,11 +1,13 @@
 import { ICommand } from "wokcommands";
 import DJS, {
+	Guild,
 	GuildChannelResolvable,
 	GuildMember,
 	GuildResolvable,
 	Interaction,
 } from "discord.js";
 import { DisClient } from '../index'
+import { songCollection } from "../index";
 
 export default {
 	category: "Music",
@@ -23,11 +25,11 @@ export default {
 		},
 	],
 
-	callback: async ({ interaction, client}) => {
+	callback: async ({ interaction, client, guild}) => {
 		if (!interaction) return
 
 		let clientextended = client as DisClient
-
+		let guildId = guild!.id
 
 		let mem = interaction.member as GuildMember
 		let player  = clientextended.manager.create({
@@ -35,20 +37,29 @@ export default {
 			voiceChannel: mem.voice.channel!.id,
 			textChannel: interaction.channel!.id
 		})
-
 		let res = await player.search(interaction.options.getString('song') as string, interaction.user)
+
+		if (songCollection[interaction.guild!.id]) {
+			songCollection[guildId].push(res.tracks[0])
+			console.log(songCollection[guildId])
+			return 'song added'
+			return
+		} else {
+			songCollection[guildId] = [res.tracks[0]]
+			console.log(songCollection[guildId])
+		}
+		console.log('waat')
 		player.connect()
-		player.queue.add(res.tracks[0])
 
 		if (!player.playing && !player.paused && !player.queue.size) {
-			player.play()
+			player.play(res.tracks[0])
 		}
 		if (
 			!player.playing &&
 			!player.paused &&
 			player.queue.totalSize === res.tracks.length
 		  )
-			player.play();
+			player.play(res.tracks[0])
 
 		interaction.reply({
 			content: `Now playing ${res.tracks[0].title}`,

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
 import { Player, Queue } from 'discord-music-player'
-import { Manager } from 'erela.js'
+import { Manager, SearchResult, Track } from 'erela.js'
 
 dotenv.config()
 
@@ -40,6 +40,9 @@ client.manager = new Manager({
 	console.log(`Node ${node.options.identifier} had an error`)	
 })
 
+let songCollection = {} as {
+	[key: string]: [Track?]
+}
 
 // Player initialization
 const player = new Player(client, {
@@ -69,4 +72,4 @@ client.on("raw", (d) => client.manager.updateVoiceState(d));
 
 client.login(process.env.TOKEN)
 
-export { player, DisClient }
+export { player, DisClient, songCollection }
