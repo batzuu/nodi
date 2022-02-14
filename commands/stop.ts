@@ -24,7 +24,6 @@ export default {
 		}
 
 		// Resetting the queue
-		songCollection[guild!.id] = []
 		player.destroy()
 
 		interaction.reply({

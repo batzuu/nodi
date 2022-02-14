@@ -7,7 +7,7 @@ import { Manager, SearchResult, Track } from 'erela.js'
 
 dotenv.config()
 
-interface DisClient extends Client{
+interface DisClient extends Client {
 	manager: Manager
 }
 
@@ -23,7 +23,7 @@ const client = new DJS.Client({
 client.manager = new Manager({
 	nodes: [
 		{
-			host: "34.126.221.152",
+			host: process.env.LAVA_URI as string,
 			port: 2333,
 			password: "youshallnotpass"
 		},
@@ -62,8 +62,9 @@ client.on('ready', async () => {
 		botOwners: ['396216482138161153'],
 		mongoUri: process.env.MONGO_URI,
 	})
-
+	
 	client.manager.init(client.user!.id as string)
+
 })
 
 

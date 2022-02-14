@@ -31,6 +31,7 @@ export default {
 			})
 			return
 		}
+
 		let amt = interaction.options.getNumber('skip_amount')
 
 		interaction.reply({

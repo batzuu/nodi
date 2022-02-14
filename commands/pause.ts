@@ -1,5 +1,5 @@
 import { ICommand } from "wokcommands";
-import { player } from '../index'
+import { DisClient, player } from '../index'
 
 export default {
 	category: 'Music',
@@ -8,19 +8,19 @@ export default {
 	slash: true,
 	testOnly: true,
 
-	callback: ({ interaction, guild }) => {
-		let guildQueue = player.getQueue(guild!.id)
-		if (!guildQueue) {
+	callback: ({ interaction, guild, client }) => {
+		let player = (client as DisClient).manager.get(guild!.id)
+		if (!player) {
 			interaction.reply({
 				content: 'Nothing to pause buddy boy',
 				ephemeral: true
 			})
 			return
 		}
-		if (guildQueue.paused) {
-			guildQueue.setPaused(false)
+		if (player.playing) {
+			player.pause(true)
 		} else {
-			guildQueue.setPaused(true)
+			player.pause(false)
 		}
 		interaction.reply({
 			content: 'Queue pause state changed broder man',
