@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
 import { Player, Queue } from 'discord-music-player'
-import { Manager, SearchResult, Track } from 'erela.js'
+import { Manager, SearchResult, Track } from '@batzu/erela.js'
 
 dotenv.config()
 

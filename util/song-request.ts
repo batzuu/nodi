@@ -22,7 +22,6 @@ var songRequest = async (client: DisClient, textChannel?: string, message?: Mess
 		voiceChannel: member?.voice.channel?.id,
 		textChannel: textChannel as string
 	})
-	console.log(player)
 	let res = await player.search(query as string, member)
 
 	// only connect if not already playing

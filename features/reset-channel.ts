@@ -1,23 +1,18 @@
 import { Queue } from "discord-music-player";
 import { Channel, Client, GuildChannel, Message, TextChannel } from "discord.js";
-import { Player, Track } from "erela.js";
 import { DisClient, player } from '../index'
 import mccSchema from '../models/music-channel-config' 
+import { handleReset } from "../util/song-message-reset";
+import { Player } from '@batzu/erela.js'
 
 export default (c: Client) => {
-	let handleReset = async (player: Player, track?: Track) => {
-		let query = await mccSchema.findById(player.guild)
-		let { musicChannelId, musicMessageId } = query
-		let targetChannel = await client.channels.fetch(musicChannelId) as TextChannel
-		let targetMessage = await targetChannel.messages.fetch(musicMessageId) as Message
-		targetMessage.edit({
-			content: 'This message will be edited with the song details'
-		})
-	}
-
 	let client = c as DisClient
-	client.manager.on('trackEnd', handleReset)
-	client.manager.on('playerDestroy', handleReset)
+	client.manager.on('trackEnd', (player, track) => {
+		handleReset(client, player, track)
+	})
+	client.manager.on('playerDestroy', (player) => {
+		handleReset(client, player)
+	})
 	// player.on('queueDestroyed', handleReset)
 	// player.on('queueEnd', handleReset)
 	// player.on('clientDisconnect', handleReset)
