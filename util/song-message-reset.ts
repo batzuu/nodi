@@ -9,7 +9,8 @@ let handleReset = async (client: DisClient, player: Player, track?: Track) => {
 	let targetChannel = await client.channels.fetch(musicChannelId) as TextChannel
 	let targetMessage = await targetChannel.messages.fetch(musicMessageId) as Message
 	targetMessage.edit({
-		content: 'This message will be edited with the song details'
+		content: 'This message will be edited with the song details',
+		components: []
 	})
 }
 

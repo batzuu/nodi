@@ -1,5 +1,5 @@
 import { Queue, Song } from "discord-music-player";
-import { Client, Guild, TextChannel } from "discord.js";
+import { Client, Guild, MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import { DisClient, player } from '../index'
 import mccSchema from '../models/music-channel-config'
 
@@ -12,8 +12,15 @@ export default (client: DisClient) => {
 		let targetChannel = await client.channels.fetch(musicChannelId) as TextChannel
 		let message = await targetChannel.messages.fetch(musicMessageId)	
 
+		const row = new MessageActionRow().addComponents(
+			new MessageButton()
+				.setCustomId('stop')
+				.setLabel('🛑')
+				.setStyle('PRIMARY')
+		)
 		message.edit({
-			content: `Now playing ${track.title}`
+			content: `Now playing ${track.title}`,
+			components: [row]
 		})
 	})
 

@@ -14,8 +14,7 @@ var songRequest = async (client: DisClient, textChannel?: string, message?: Mess
 		guildId = interaction.guild!.id
 		// assuming song discord option name to be 'song'
 		query = interaction.options.get('song')
-	}
-	
+	}	
 	// player will be created if it does not exits
 	let player = client.manager.create({
 		guild: member?.guild.id as string,

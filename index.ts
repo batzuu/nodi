@@ -10,7 +10,6 @@ dotenv.config()
 interface DisClient extends Client {
 	manager: Manager
 }
-
 const client = new DJS.Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
