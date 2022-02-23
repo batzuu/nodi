@@ -10,7 +10,7 @@ export default (c: Client) => {
 		let player = client.manager.get(interaction.guildId!)
 		if ((interaction.member as GuildMember).voice.channelId != player?.voiceChannel) {
 			interaction.reply({
-				content: 'Bhag bhsdk',
+				content: 'Bhag bsdk',
 				ephemeral: true
 			})
 			return
