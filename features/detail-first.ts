@@ -15,7 +15,15 @@ export default (client: DisClient) => {
 		const row = new MessageActionRow().addComponents(
 			new MessageButton()
 				.setCustomId('stop')
-				.setLabel('🛑')
+				.setEmoji('✋')
+				.setStyle('PRIMARY'),
+			new MessageButton()
+				.setCustomId('pause')
+				.setEmoji('⏸')
+				.setStyle('PRIMARY'),
+			new MessageButton()
+				.setCustomId('skip')
+				.setEmoji('⏭')
 				.setStyle('PRIMARY')
 		)
 		message.edit({

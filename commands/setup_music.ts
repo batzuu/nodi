@@ -17,7 +17,7 @@ export default {
 			})
 			return
 		}
-
+		interaction.deferReply()
 		let musicChannel = await guild.channels.create('nodi-music', {
 			topic: 'Text channel for nodi music bot',
 			position: 2
