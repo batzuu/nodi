@@ -10,6 +10,7 @@ export default (c: Client) => {
 		let player = await client.manager.get(interaction.guildId!)
 		let interId = interaction.customId
 
+		let repl: string = 'empty'
 		switch (interId) {
 			case 'stop': {
 				if ((interaction.member as GuildMember).voice.channelId != player?.voiceChannel) {
@@ -20,9 +21,7 @@ export default (c: Client) => {
 					return
 				}
 				player?.destroy()
-				interaction.reply({
-					content: 'Stopped! Player Destroyed'
-				})
+				repl = 'Stopped! Player Destroyed'
 				//
 				break
 			}
@@ -32,9 +31,13 @@ export default (c: Client) => {
 				} else {
 					player!.pause(false)
 				}
+				repl = 'Pause state changed'
 				break
 			}
 		}
+		interaction.reply({
+			content: repl,
+		})
 		setTimeout(() => {
 			interaction.deleteReply()
 		}, 3 * 1000)

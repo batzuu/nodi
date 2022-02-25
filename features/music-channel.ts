@@ -14,6 +14,15 @@ export default (client: Client) => {
 
 		// Do not listen if the message is not on the music channel or authored by bot
 		if (message.author.bot == true || (message.channel.id != musicChannelId)) return
+		if (!message.member?.voice.channelId) {
+			message.reply('No').then(reply => {
+				setTimeout(() => {
+					reply.delete()
+					message.delete()
+				}, 2 * 1000)
+			})
+			return
+		}
 
 		songRequest(client as DisClient, message.channel.id, message)
 	})

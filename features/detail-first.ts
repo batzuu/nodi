@@ -26,8 +26,9 @@ export default (client: DisClient) => {
 				.setEmoji('⏭')
 				.setStyle('PRIMARY')
 		)
+		let trackSec = track.duration / 1000
 		message.edit({
-			content: `Now playing ${track.title}`,
+			content: `Now playing ${track.title} | [${Math.floor(trackSec / 60)}:${trackSec % 60}]`,
 			components: [row]
 		})
 	})
