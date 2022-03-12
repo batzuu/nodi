@@ -1,3 +1,4 @@
+import { Player } from "@batzu/erela.js";
 import { CommandInteraction, DMChannel, GuildManager, GuildMember, GuildMemberEditData, Message, TextChannel } from "discord.js";
 import { MembershipStates } from "discord.js/typings/enums";
 import { DisClient } from "..";
@@ -38,7 +39,11 @@ var songRequest = async (client: DisClient, textChannel?: string, message?: Mess
 			player.queue.totalSize === res.tracks.length
 		)
 		player.play(res.tracks[0]);
-
+		let event = new Event('trackAdd')
+		client.manager.emit('trackAdd', player)
+		client.manager.addListener('trackAdd', (player: Player) => {
+			console.log(player.guild)
+		})
 	} catch {
 		if (message) {
 			message.reply({

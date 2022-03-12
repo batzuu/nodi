@@ -1,5 +1,5 @@
 import { ICommand } from "wokcommands";
-import { DisClient, player } from '../index'
+import { DisClient } from '../index'
 
 export default {
 	category: 'Music',

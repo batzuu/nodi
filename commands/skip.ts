@@ -1,6 +1,6 @@
 import { Constants } from "discord.js";
 import { ICommand } from "wokcommands";
-import { DisClient, player } from '../index'
+import { DisClient } from '../index'
 import play from "./play";
 
 export default {

@@ -2,7 +2,6 @@ import DJS, { Client, DiscordAPIError, Guild, GuildMember, Intents } from 'disco
 import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
-import { Player, Queue } from 'discord-music-player'
 import { Manager, SearchResult, Track } from '@batzu/erela.js'
 
 dotenv.config()
@@ -43,11 +42,6 @@ let songCollection = {} as {
 	[key: string]: [Track?]
 }
 
-// Player initialization
-const player = new Player(client, {
-	leaveOnEmpty: false,
-	leaveOnEnd: false
-})
 
 client.on('ready', async () => {
 
@@ -57,7 +51,7 @@ client.on('ready', async () => {
 		featureDir: path.join(__dirname, 'features'),
 		typeScript: true,
 
-		testServers: ['923972892683817011', '460800811518394368', '930391815465603144', '639524964243865633'],
+		testServers: ['923972892683817011', '460800811518394368', '930391815465603144', '639524964243865633', '847735333507432458'],
 		botOwners: ['396216482138161153'],
 		mongoUri: process.env.MONGO_URI,
 	})
@@ -66,10 +60,12 @@ client.on('ready', async () => {
 
 })
 
+const event = new Event('trackAdd')
+
 
 client.on("raw", (d) => client.manager.updateVoiceState(d));
 
 
 client.login(process.env.TOKEN)
 
-export { player, DisClient, songCollection }
+export { DisClient, songCollection }

@@ -1,6 +1,6 @@
 import { ChannelResolvable, Client, Guild, GuildChannelResolvable, GuildMember, GuildResolvable, Interaction, Message, TextChannel } from "discord.js";
 import mccSchema from '../models/music-channel-config'
-import {DisClient, player, songCollection} from '../index'
+import {DisClient, songCollection} from '../index'
 import { songRequest } from "../util/song-request";
 
 export default (client: Client) => {

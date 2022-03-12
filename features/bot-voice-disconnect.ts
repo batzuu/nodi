@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { Client, GuildMember } from "discord.js";
 import { DisClient } from "..";
 
 export default (client: Client) => {
@@ -7,6 +7,9 @@ export default (client: Client) => {
 		if (!player) {
 			return
 		}
+		let mem = oldS.member
+		
+		if (!mem?.user.bot) return
 		if (newS.channelId === null) {
 			player.destroy()
 		}

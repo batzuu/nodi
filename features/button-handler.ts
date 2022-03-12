@@ -34,6 +34,25 @@ export default (c: Client) => {
 				repl = 'Pause state changed'
 				break
 			}
+			case 'skip': {
+				if (!player) {
+					repl = 'ni hua :3'
+					return
+				} 
+				player.stop()
+				repl = 'Next SONG! chalo'
+				break
+			}
+			case 'plus10': {
+				player?.seek(player.position + 10000)
+				repl = '+10sec, Done!'
+				break
+			}
+			case 'minus10': {
+				player?.seek(Math.max(0, player.position - 10000))
+				repl = '-10sec, Done!'
+				break
+			}
 		}
 		interaction.reply({
 			content: repl,
