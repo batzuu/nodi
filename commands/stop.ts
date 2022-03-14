@@ -1,7 +1,7 @@
 // quick stop command 
 
 import { ICommand } from "wokcommands";
-import { DisClient, player, songCollection } from '../index'
+import { DisClient, songCollection } from '../index'
 
 export default {
 	category: 'Music',

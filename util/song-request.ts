@@ -30,20 +30,17 @@ var songRequest = async (client: DisClient, textChannel?: string, message?: Mess
 			player.connect()
 		}
 		player.queue.add(res.tracks[0])
+		console.log(player.queue.size)
 		if (!player.playing && !player.paused && !player.queue.size) {
-			player.play(res.tracks[0])
+			player.play()
+			console.log(player.queue.size)
 		}
-		if (
-			!player.playing &&
-			!player.paused &&
-			player.queue.totalSize === res.tracks.length
-		)
-		player.play(res.tracks[0]);
-		let event = new Event('trackAdd')
-		client.manager.emit('trackAdd', player)
-		client.manager.addListener('trackAdd', (player: Player) => {
-			console.log(player.guild)
-		})
+		if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length) {
+			player.play(res.tracks[0]);
+			console.log(player.queue.size)
+		}
+		let event = new Event('queueChange')
+		client.manager.emit('queueChange', player)
 	} catch {
 		if (message) {
 			message.reply({

@@ -22,7 +22,6 @@ export default (c: Client) => {
 				}
 				player?.destroy()
 				repl = 'Stopped! Player Destroyed'
-				//
 				break
 			}
 			case 'pause': {
@@ -35,16 +34,16 @@ export default (c: Client) => {
 				break
 			}
 			case 'skip': {
-				if (!player) {
-					repl = 'ni hua :3'
-					return
-				} 
-				player.stop()
-				repl = 'Next SONG! chalo'
-				break
+				if (!player?.queue.size) {
+					repl = 'Nothing to skip! Queue Empty!'
+				} else {
+					player.stop()
+					repl = 'Next SONG! chalo'
+					break
+				}
 			}
 			case 'plus10': {
-				player?.seek(player.position + 10000)
+				player?.seek(Math.min(player.queue.current?.duration as number, player.position + 10000))
 				repl = '+10sec, Done!'
 				break
 			}

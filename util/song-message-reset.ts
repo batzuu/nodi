@@ -9,11 +9,11 @@ let handleReset = async (client: DisClient, player: Player, track?: Track) => {
 	let targetChannel = await client.channels.fetch(musicChannelId) as TextChannel
 	let targetMessage = await targetChannel.messages.fetch(musicMessageId) as Message
 	let defaultEmbed = new MessageEmbed()
-		.setTitle('Kya bajau bhaaai!!')
-		.setImage('https://cdn.discordapp.com/attachments/647062306441658369/906197845558841364/unknown.png')
+		.setTitle('Play songs using name or link after joining a voice channel')
+		.setImage('https://ae01.alicdn.com/kf/HTB1PRkUJ1GSBuNjSspbq6AiipXaY/The-new-TV-clown-fool-30cm-Noddy-plush-toy-doll-Noddy-Oui-Oui-Plush-Toy-Mini.jpg_Q90.jpg_.webp')
 		.setColor('BLURPLE')
 	targetMessage.edit({
-		content: `**Queue:**\nNothing in queue rn brother man :))`,
+		content: `**Queue:**\nNothing in queue`,
 		embeds: [defaultEmbed],
 		components: []
 	})

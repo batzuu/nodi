@@ -3,6 +3,7 @@ import { DisClient } from '../index'
 import mccSchema from '../models/music-channel-config' 
 import { handleReset } from "../util/song-message-reset";
 import { Player, Track } from '@batzu/erela.js'
+import { handleQueueDetail } from "../util/queue-detail-handler";
 
 export default (c: Client) => {
 	let client = c as DisClient
@@ -13,6 +14,13 @@ export default (c: Client) => {
 		handleReset(client, player)
 	})
 	client.manager.on('playerMove', (player) => {})
+	client.manager.on('trackEnd', (player, track) => {
+		handleQueueDetail(client,player)
+	})
+	// scuffed eventhandler to handle updating queue details
+	client.manager.addListener('queueChange', (player: Player) => {
+		handleQueueDetail(client as DisClient, player)
+	})
 	// player.on('queueDestroyed', handleReset)
 	// player.on('queueEnd', handleReset)
 	// player.on('clientDisconnect', handleReset)
